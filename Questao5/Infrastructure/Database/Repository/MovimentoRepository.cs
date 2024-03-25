@@ -23,7 +23,28 @@ namespace Questao5.Infrastructure.Database.Repository
 
                 return connection.Execute(@"insert into movimento (idmovimento, idcontacorrente, datamovimento, tipomovimento, valor) 
                                             values (@IdMovimento, @IdContaCorrente, @DataMovimento, @TipoMovimento, @Valor);",
-                    movimento, commandTimeout: 60) == 1;
+                    new 
+                    { 
+                        IdMovimento = movimento.IdMovimento.ToString().ToUpper(), 
+                        IdContaCorrente = movimento.IdContaCorrente.ToUpper(),
+                        DataMovimento = movimento.DataMovimento,
+                        TipoMovimento = movimento.TipoMovimento,
+                        Valor = movimento.Valor
+                    }, commandTimeout: 60) == 1;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        public List<Movimento> ObterMovimentosContaCorrente(string idContaCorrente)
+        {
+            try
+            {
+                using var connection = new SqliteConnection(databaseConfig.Name);
+
+                return connection.Query<Movimento>(@"select * from movimento where idcontacorrente = @IdContaCorrente;", new { IdContaCorrente = idContaCorrente.ToUpper() }, commandTimeout: 60).ToList();
             }
             catch (Exception)
             {

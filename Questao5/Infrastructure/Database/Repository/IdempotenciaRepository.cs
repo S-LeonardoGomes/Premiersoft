@@ -22,7 +22,7 @@ namespace Questao5.Infrastructure.Database.Repository
                 using var connection = new SqliteConnection(databaseConfig.Name);
 
                 return connection.QueryFirstOrDefault<IdempotenciaResponse>("select * from idempotencia where chave_idempotencia = @Chave;",
-                    new { Chave = idRequisicao }, commandTimeout: 60);
+                    new { Chave = idRequisicao.ToUpper() }, commandTimeout: 60);
             }
             catch (Exception)
             {
@@ -37,7 +37,7 @@ namespace Questao5.Infrastructure.Database.Repository
                 using var connection = new SqliteConnection(databaseConfig.Name);
 
                 return connection.Execute("insert into idempotencia (chave_idempotencia, requisicao, resultado) values (@Chave, @Request, @Response);",
-                    new { Chave = idRequisicao, Request = request, Response = response }, commandTimeout: 60) == 1;
+                    new { Chave = idRequisicao.ToUpper(), Request = request, Response = response }, commandTimeout: 60) == 1;
             }
             catch (Exception)
             {

@@ -2,6 +2,6 @@
 {
     public class MovimentarContaCorrenteResponse
     {
-        public Guid IdMovimento { get; set; }
+        public string IdMovimento { get; set; }
     }
 }

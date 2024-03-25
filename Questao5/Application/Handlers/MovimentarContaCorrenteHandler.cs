@@ -102,7 +102,7 @@ namespace Questao5.Application.Handlers
         {
             Movimento movimentoRequest = new()
             {
-                IdMovimento = Guid.NewGuid(),
+                IdMovimento = Guid.NewGuid().ToString(),
                 DataMovimento = DateTime.Today.ToString("yyyy-MM-dd"),
                 IdContaCorrente = request.IdContaCorrente.ToString(),
                 TipoMovimento = request.TipoMovimento,
